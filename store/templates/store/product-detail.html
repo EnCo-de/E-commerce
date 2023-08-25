@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% include 'includes/header.html' %}
+
+<section class="section-content padding-y bg">
+<div class="container">
+
+<!-- ============================ COMPONENT 1 ================================= -->
+<div class="card">
+	<div class="row no-gutters">
+		<aside class="col-md-6">
+      <article class="gallery-wrap"> 
+        <div class="img-big-wrap">
+          <a href="#"><img src={{ product.images.url }}></a>
+        </div> <!-- img-big-wrap.// -->
+        
+      </article> <!-- gallery-wrap .end// -->
+		</aside>
+
+		<!-- product-info-aside -->
+		<main class="col-md-6 border-left">
+<article class="content-body">
+
+<h2 class="title">{{ product.product_name }}</h2>
+<div class="mb-3"> 
+	<var class="price h4">${{ product.price|floatformat:2 }}</var> 
+</div> <p>{{ product.description }}</p>
+
+<hr>
+	<form action="{% url 'add_cart' product.id %}" method="post">
+    {% csrf_token %}
+    <div class="row"><!-- Color -->
+      <div class="item-option-select">
+        <h6>Choose Color</h6>
+        <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+          <div class="d-flex flex-wrap">
+          {% for variation in product.variations.colors %}
+          <label class="btn btn-light btn-check flex-fill" for="{{ variation.get_variation_category_display }}-{{ forloop.counter }}">
+            <input type="radio" required name="radio_color" value="{{ variation.variation_value | lower }}" id="{{ variation.get_variation_category_display }}-{{ forloop.counter }}"> 
+            {{ variation.variation_value | capfirst }}
+          </label>
+          {% endfor %}
+          </div>
+        </div> 
+      </div>
+    </div> <!-- row.// -->
+
+
+    <div class="row"><!-- Size -->
+      <div class="item-option-select">
+        <h6>Select Size</h6>
+        <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+          <div class="d-flex flex-wrap">
+            {% for variation in product.variations.sizes %}
+            <label class="btn btn-light btn-check flex-fill" for="{{ variation.get_variation_category_display }}-{{ forloop.counter }}">
+              <input type="radio" required name="radio_size" value="{{ variation.variation_value | lower }}" id="{{ variation.get_variation_category_display }}-{{ forloop.counter }}"> 
+              {{ variation.variation_value | upper }}
+            </label>
+            {% endfor %}
+          </div>
+          
+        </div> 
+      </div>
+    </div> <!-- row.// -->
+
+    
+    <div class="row"><!-- Quantity -->
+      <div class="item-option-select">
+        <label for="quantity" class="form-label">
+          <h6>Select quantity (between 1 and 5):</h6></label>
+        <input type="number" required id="quantity" name="quantity" min="1" max="5"  value="1" class="form-control" >
+      </div>
+    </div> <!-- row.// -->
+
+    <hr>
+    {% if product.stock > 0 %}
+      <button type="submit" class="btn  btn-primary"> <span class="text">Add 1 to cart</span> <i class="fas fa-shopping-cart"></i>  </button>
+      {% if in_cart %}<div class="btn btn-success"><span class="text">Added to cart</span> <i class="fas fa-check"></i>  </div>
+        <a href="{% url 'remove_cart' product.id %}?remove=All" class="btn btn-danger">Remove all</a>
+      {% endif %}
+    {% else %}
+    <button class="btn  btn-secondary" disabled> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>  </button>
+    <h5 class="text-danger">Out of stock</h5>
+    {% endif %}
+	</form>
+</article> <!-- product-info-aside .// -->
+
+		</main> <!-- col.// -->
+	</div> <!-- row.// -->
+</div> <!-- card.// -->
+<!-- ============================ COMPONENT 1 END .// ================================= -->
+
+<!-- ============================ Customer Reviews ============================ -->
+<br>
+<div class="row">
+			<div class="col-md-9">
+
+	<header class="section-heading">
+		<h3>Customer Reviews </h3>  
+		
+	</header>
+
+	<article class="box mb-3">
+		<div class="icontext w-100">
+			<img src={% static "images/avatars/avatar1.jpg" %} class="img-xs icon rounded-circle">
+			<div class="text">
+				<span class="date text-muted float-md-right">24.04.2020 </span>  
+				<h6 class="mb-1">Mike John </h6>
+				
+			</div>
+		</div> <!-- icontext.// -->
+		<div class="mt-3">
+			<p>
+				Dummy comment Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip
+			</p>	
+		</div>
+	</article>
+
+	
+
+	</div> <!-- col.// -->
+</div> <!-- row.// -->
+
+
+</div> <!-- container .//  -->
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+{% include 'includes/footer.html' %}
+{% endblock content %}
