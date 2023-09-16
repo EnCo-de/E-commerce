@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% include 'includes/header.html' %}
+
+
+
+<section class="section-content padding-y bg">
+<div class="container">
+
+<!-- ============================ COMPONENT 1 ================================= -->
+
+<div class="row">
+	<aside class="col-lg-9">
+<div class="card">
+<table class="table table-borderless table-shopping-cart">
+  <thead class="text-muted">
+    <tr class="small text-uppercase">
+      <th scope="col">Product</th>
+      <th scope="col" width="120">Quantity</th>
+      <th scope="col" width="120">Price</th>
+      <th scope="col" class="text-right" width="200"> </th>
+    </tr>
+  </thead>
+
+  <tbody>
+  {% for item in cart %}
+    <tr>
+    	<td>
+    		<figure class="itemside align-items-center">
+    			<div class="aside"><img src="{{ item.product.images.url }}" class="img-sm"></div>
+    			<figcaption class="info">
+    				<a href="{{ item.product.get_absolute_url }}" class="title text-dark">{{ item.product.product_name }}</a>
+    				<p class="text-muted small">{{ item.product.description|truncatechars:60 }}</p>
+    				{% for var_item in item.variations.all %}
+    				<p class="text-muted small">{{ var_item.get_variation_category_display | capfirst }}: {{ var_item.variation_value }}</p>
+    				{% endfor %}
+    			</figcaption>
+    		</figure>
+    	</td>
+    	<td> 
+    		<!-- col.// -->
+    					<div class="col"> 
+    						<div class="input-group input-spinner">
+    							<div class="input-group-prepend">
+    							<a href="{% url 'remove_cart' item.product.id %}?pk={{ item.id }}" class="btn btn-light" id="button-minus"> <i class="fa fa-minus"></i> </a>
+    							</div>
+    							<input type="text" class="form-control"  value="{{ item.quantity }}">
+    							<div class="input-group-append">
+    							<a href="{% url 'add_cart' item.product.id %}?pk={{ item.id }}" class="btn btn-light" id="button-plus"> <i class="fa fa-plus"></i> </a>
+    							</div>
+    						</div> <!-- input-group.// -->
+    					</div> <!-- col.// -->
+    	</td>
+    	<td> 
+    		<div class="price-wrap"> 
+    			<var class="price">${{ item.sub_total|floatformat:2 }}</var> 
+    			<small class="text-muted"> ${{ item.product.price|floatformat:2 }} each </small> 
+    		</div> <!-- price-wrap .// -->
+    	</td>
+    	<td class="text-right"> 
+    	<a href="{% url 'remove_cart' item.product.id %}?remove=True&pk={{ item.id }}" class="btn btn-danger"> Remove</a>
+    	</td>
+    </tr>
+  {% endfor %}
+  
+  </tbody>
+</table>
+</div> <!-- card.// -->
+
+	</aside> <!-- col.// -->
+	<aside class="col-lg-3">
+
+		<div class="card">
+		<div class="card-body">
+			<dl class="dlist-align">
+			  <dt>Total price:</dt>
+			  <dd class="text-right">${{ total|floatformat:2 }}</dd>
+			</dl>
+			<dl class="dlist-align">
+			  <dt>Tax:</dt>
+			  <dd class="text-right"> ${{ tax|floatformat:2 }}</dd>
+			</dl>
+			<dl class="dlist-align">
+			  <dt>Total:</dt>
+			  <dd class="text-right text-dark b"><strong>${{ Total|floatformat:2 }}</strong></dd>
+			</dl>
+			<hr>
+			<p class="text-center mb-3">
+				<img src="{% static 'images/misc/payments.png' %}" height="26">
+			</p>
+			<a href="{% url 'checkout' %}" class="btn btn-primary btn-block"> Checkout </a>
+			<a href="{% url 'products_by_category' category_slug %}" class="btn btn-light btn-block">Continue Shopping</a>
+		</div> <!-- card-body.// -->
+		</div> <!-- card.// -->
+
+</aside> <!-- col.// -->
+
+
+</div> <!-- row.// -->
+<!-- ============================ COMPONENT 1 END .// ================================= -->
+
+</div> <!-- container .//  -->
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+{% endblock content %}
