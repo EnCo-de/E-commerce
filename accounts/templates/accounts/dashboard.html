@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% include 'includes/header.html' %}
+
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-content padding-y bg">
+
+<div class="container">
+	<div class="row">
+	{% if request.user.is_authenticated %}
+	{% include 'includes/alerts.html' %}
+	{% include 'includes/dashboard-sidebar.html' %}
+
+	<main class="col-md-9">
+		<article class="card">
+		<header class="card-header">
+			<strong class="d-inline-block mr-3">Logged in as:</strong>
+			<span>{{user.full_name}}</span>
+		</header>
+		<div class="card-body">
+			<div class="row">
+
+			<div class="col-md-6">
+				<div class="card" style="text-align:center;">
+					<div class="card-body">
+						<h5 class="card-title">Total Orders</h5>
+						<h4>{{order_count}}</h4>
+						<a href="{% url 'orders' %}">View Orders</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="card" style="text-align:center;">
+					<div class="card-body">
+						<img src=
+						{% if userprofile and userprofile.profile_picture %}
+							"{{userprofile.profile_picture.url}}" 
+						{% else %}
+							"{% static 'images/avatars/userprofile.png' %}" 
+						{% endif %} alt="User Profile Picture" width="50" height="50" style="border-radius:50%;">
+						<p class="mb-0">{{user.email}}</p>
+						<p>{{user.phone_number}}</p>
+					</div>
+				</div>
+			</div>
+
+			</div> <!-- row.// -->
+		</div> <!-- card-body .// -->
+
+		</article> <!-- order-group.// -->
+	</main>
+	{% else %}
+		<div class="container-fluid">
+		<h4 class="text-center mt-4">You should <a href="{% url 'user_login' %}">Log in</a></h4>
+		</div>
+	{% endif %}
+	</div> <!-- row.// -->
+</div>
+
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+{% include 'includes/footer.html' %}
+{% endblock content %}
