@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% include 'includes/header.html' %}
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-content padding-y bg">
+
+<div class="container">
+	<div class="row">
+	{% if request.user.is_authenticated %}
+	{% include 'includes/alerts.html' %}
+	{% include 'includes/dashboard-sidebar.html' %}
+
+		<main class="col-md-9">
+			<article class="card">
+			<header class="card-header">
+				<strong class="d-inline-block mr-3">Order ID: {{ order.order_number }}</strong>
+				<span>Order Date: {{ order.updated_at | date }}</span>
+			</header>
+			<div class="card-body">
+				<div class="row"> 
+					<div class="col-md-8">
+						<h6 class="text-muted">Delivery to</h6>
+						<p>{{ order.full_name }} <br>  
+						Phone +{{ order.phone }} Email: {{ order.email }} <br>
+							Location: {{order.full_address}}, {{order.city}}, {{order.state}}, {{order.country}} <br> 
+							P.O. Box: 100123
+						</p>
+					</div>
+					<div class="col-md-4">
+						<h6 class="text-muted">Payment</h6>
+						<p><span class="text-primary">
+						{{order.payment.payment_method}}</span> 
+              <strong>Transaction</strong> #{{ order.payment.payment_id }}</p>
+						<span class="text-success">
+							<i class="fab fa-lg fa-cc-visa"></i>
+								Visa  **** 4216  
+						</span>
+						<p>Subtotal: ${{order.order_total}} <br>
+						Shipping fee:  $0 <br> 
+						<span class="b">Total:  ${{order.payment.amount_paid}} </span>
+						</p>
+					</div>
+				</div> <!-- row.// -->
+			</div> <!-- card-body .// -->
+			<div class="table-responsive">
+			<table class="table table-hover">
+
+			{% for item in order.orderproduct_set.all %}
+				<tr>
+					<td width="65">
+						<img src="{{ item.product.images.url }}" class="img-xs border">
+					</td>
+					<td> 
+						<p class="title mb-0">{{ item.product.product_name }} </p>
+						<var class="price text-muted">USD {{ item.sub_total|floatformat:2 }}</var>
+						<small class="text-muted"> ${{ item.product.price|floatformat:2 }} each </small> 
+					</td>
+					<td> Seller <br> Nike clothing </td>
+					<td width="250"> <a href="#" class="btn btn-outline-primary">Track order</a> <a href="#" class="btn btn-light"> Details </a> </td>
+				</tr>
+			{% endfor %}
+
+			</table>
+			</div> <!-- table-responsive .end// -->
+			</article> <!-- order-group.// --> 
+		</main>
+	{% else %}
+		<div class="container-fluid">
+		<h4 class="text-center mt-4">You should <a href="{% url 'user_login' %}">Log in</a></h4>
+		</div>
+	{% endif %}
+	</div> <!-- row.// -->
+</div>
+
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+{% include 'includes/footer.html' %}
+{% endblock content %}
