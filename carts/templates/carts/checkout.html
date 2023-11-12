@@ -8,9 +8,10 @@
 <div class="container">
 <div class="row">
 
-  <form action="{% url 'place_order' %}" method="POST">
+
   <aside class="col-lg-6">
-    <div class="card">
+  <form action="{% url 'place_order' %}" method="POST">
+  <div class="card">
       <div class="card-body"> <!-- Billing form -->
         <h4 class="card-title mb-4">Billing Address</h4>
         {% csrf_token %}
@@ -115,8 +116,8 @@
         
   		</div> <!-- card-body.// -->
 		</div> <!-- card.// -->
-  </aside> <!-- col.// -->
   </form>
+  </aside> <!-- col.// -->
 </div> <!-- row.// -->
 </div> <!-- container .//  -->
 </section>
