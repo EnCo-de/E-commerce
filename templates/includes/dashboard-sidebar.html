@@ -1,1 +1,19 @@
-
+<aside class="col-md-3">
+	<!--   SIDEBAR   -->
+	<ul class="list-group">
+		<a class="list-group-item{% if request.resolver_match.url_name == 'dashboard' %} active{% endif %}" href="{% url 'dashboard' %}"> Dashboard </a>
+		<a class="list-group-item{% if request.resolver_match.url_name == 'orders' %} active{% endif %}" href="{% url 'orders' %}"> My orders </a>
+		{% if userprofile %}
+			<a class="list-group-item{% if request.resolver_match.url_name == 'edit_profile' %} active{% endif %}" href="{% url 'edit_profile' %}"> Edit Profile </a>
+		{% endif %}
+		<a class="list-group-item{% if request.resolver_match.url_name == 'change_password' %} active{% endif %}" href="{% url 'change_password' %}"> Change Password </a>
+		<a class="list-group-item" href="#"> Transactions </a>
+		<a class="list-group-item" href="#"> Return and refunds </a>
+		<a class="list-group-item" href="#"> Settings </a>
+		<a class="list-group-item" href="#"> My Selling Items </a>
+		<a class="list-group-item" href="#"> Received orders </a>
+	</ul>
+	<br>
+	<a class="btn btn-light btn-block" href="{% url 'user_logout' %}"> <i class="fa fa-power-off"></i> <span class="text">Log out</span> </a> 
+	<!--   SIDEBAR .//END   -->
+</aside>
