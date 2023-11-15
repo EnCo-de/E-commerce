@@ -105,7 +105,7 @@ def place_order(request):
                 'grand_total': grand_total,
             })
 
-    return render(request, "orders/place-order.html", context={'form': form})
+    return redirect(reverse('store'))
 
 
 @login_required
