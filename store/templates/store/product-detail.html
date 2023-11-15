@@ -1,6 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block jQuery %}
+    $('.thumb a').click(function(e){
+      e.preventDefault();
+      $('.mainImage img').attr('src', $(this).attr("href"));
+    })
+{% endblock jQuery %}
+
 {% block content %}
 {% include 'includes/header.html' %}
 
@@ -152,8 +159,12 @@
     {% for review in reviews %}
     <article class="box mb-3">
       <div class="icontext w-100">
-        <img src={% static "images/avatars/avatar1.jpg" %} class="img-xs icon rounded-circle">
-        <div class="text">
+	{% if review.user.userprofile and review.user.userprofile.profile_picture %}
+          <img src="{{review.user.userprofile.profile_picture.url}}" alt="Profile Picture" class="img-xs icon rounded-circle">
+        {% else %}
+          <img src={% static 'images/avatars/userprofile.png' %} class="img-xs icon rounded-circle">
+        {% endif %}
+	<div class="text">
           <span class="date text-muted float-md-right">{{ review.updated_at|timesince }} ago</span>  
           <h6 class="mb-1">{{ review.user.full_name }}</h6><p>{{ review.rating }} star rating</p>
           <div class="rating-star"><span>{{ review.stars | safe }}</span></div>
@@ -186,14 +197,4 @@
 </section>
 <!-- ========================= SECTION CONTENT END// ========================= -->
 {% include 'includes/footer.html' %}
-
-<script>
-  $(document).ready(function(){
-    $('.thumb a').click(function(e){
-      e.preventDefault();
-      $('.mainImage img').attr('src', $(this).attr("href"));
-    })
-  })
-</script>
-
 {% endblock content %}
