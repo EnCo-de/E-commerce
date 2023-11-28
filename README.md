@@ -42,10 +42,11 @@ E-commerce website Django project
 6. Make and apply migrations
    
    $ python manage.py makemigrations
+   
    $ python manage.py migrate
 
 
-7. Start the development server
+8. Start the development server
 
    $ python manage.py runserver
 
