@@ -181,7 +181,7 @@ def user_reset(request):
     if user is not None:
         user.is_active = False
         user.save(update_fields=['is_active'])
-    return render(request, 'accounts\signin.html')
+    return render(request, 'accounts/signin.html')
 
 # development only
 def noregister(request):
