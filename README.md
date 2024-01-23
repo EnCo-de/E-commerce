@@ -5,6 +5,7 @@ E-commerce website Django project
 
       create a new folder and navigate into it. In this folder, you’ll set up and activate a new virtual environment using your command line:
       
+            $ python -m venv env
             $ python3 -m venv env
       
       On Windows, run:
