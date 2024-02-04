@@ -131,7 +131,7 @@ def orders(request):
 
 @login_required
 def edit_profile(request):
-    userprofile = get_object_or_404(UserProfile, account=request.user)
+    userprofile, created = UserProfile.objects.get_or_create(account=request.user)
     if request.method == 'POST':
         user_form = UserForm(request.POST, instance=request.user)
         profile_form = UserProfileForm(request.POST, request.FILES, instance=userprofile)
