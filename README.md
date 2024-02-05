@@ -23,10 +23,6 @@ E-commerce website Django project
             
             (env) $ cd E-commerce
 
-      Switch to a new branch 'EnCo-de-patch-1'
-
-            (env) $ git checkout EnCo-de-patch-1
-
   
 4. Install Django and Dependencies into this dedicated development workspace:
 
@@ -63,3 +59,7 @@ E-commerce website Django project
    Now, open a web browser and go to your local domain – http://127.0.0.1:8000/
    
    Use the Django admin site http://127.0.0.1:8000/admin/ try logging in with the superuser account and add some product categories and products to the store.
+
+   You can also load some sample product data
+
+   (env) $ python manage.py loaddata products.json
