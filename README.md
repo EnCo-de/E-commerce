@@ -42,24 +42,24 @@ E-commerce website Django project
 
 7. Run set_demo.py to edit project settings
 
-   (env) $ python set_demo.py
+            (env) $ python set_demo.py
 
 
 8. Make and apply migrations
    
-   (env) $ python manage.py makemigrations
+            (env) $ python manage.py makemigrations
    
-   (env) $ python manage.py migrate
+            (env) $ python manage.py migrate
 
 
 9. Start the development server
 
-   (env) $ python manage.py runserver
+            (env) $ python manage.py runserver
 
    Now, open a web browser and go to your local domain – http://127.0.0.1:8000/
    
    Use the Django admin site http://127.0.0.1:8000/admin/ try logging in with the superuser account and add some product categories and products to the store.
 
-   You can also load some sample product data
+   You can load some sample product data as well.
 
-   (env) $ python manage.py loaddata products.json
+            (env) $ python manage.py loaddata products.json
