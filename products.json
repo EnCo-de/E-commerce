@@ -327,7 +327,7 @@
                 "model": "store.variation",
                 "pk": 12,
                 "fields": {
-                        "product": 2,
+                        "product": 1,
                         "variation_category": "c",
                         "variation_value": "blue",
                         "is_active": true,
